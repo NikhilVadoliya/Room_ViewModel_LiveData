@@ -5,10 +5,11 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.pulse.roomdemo.DataViewModel;
 import com.pulse.roomdemo.R;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private Button mBtnDelete, mBtnAdd;
-    private ListView mListViewUser;
+    private RecyclerView mRecyclerViewUser;
     private UserListAdapter mListAdapter;
 
     private Executor executor;
@@ -56,14 +57,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<User> users) {
                 mUserList = users;
-                mListAdapter.setList(users);
+                mListAdapter.setUserList(users);
             }
         });
 
         //insert  data in database
         if (!appDatabase.isTableExits(Constant.TABLE_USER)) {
-            for (int i = 1; i < 10; i++) {
-                final User user = new User(0, "Name" + i);
+            for (int i = 1; i < 150; i++) {
+                final User user = new User("Name " + i);
                 executor.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -101,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (mUserList.size() > 0)
-                    mDataViewModel.deleteUserDataById(mListAdapter.getItem(0).getId());
+                    mDataViewModel.deleteUserDataById(mListAdapter.getUserId(0));
 
             }
         });
@@ -118,8 +119,10 @@ public class MainActivity extends AppCompatActivity {
 
         mBtnDelete = findViewById(R.id.btn_delete);
         mBtnAdd = findViewById(R.id.btn_add);
-        mListViewUser = findViewById(R.id.list_user);
-
+        mRecyclerViewUser = findViewById(R.id.recycleview);
+        mRecyclerViewUser.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerViewUser.setHasFixedSize(true);
+        mRecyclerViewUser.setItemAnimator(new DefaultItemAnimator());
         appDatabase = AppDatabase.getDatabase(getApplication());
         mDatabaseDao = appDatabase.databaseDao();
         executor = Executors.newSingleThreadExecutor();
@@ -130,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         mUserList = new ArrayList<>();
 
         mListAdapter = new UserListAdapter(getApplicationContext());
-        mListViewUser.setAdapter(mListAdapter);
+        mRecyclerViewUser.setAdapter(mListAdapter);
 
     }
 }

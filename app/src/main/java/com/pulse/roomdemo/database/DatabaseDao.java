@@ -37,7 +37,6 @@ public interface DatabaseDao {
     @Query("select * from User where id = :id")
     User getUser(String id);
 
-
     @Insert(onConflict = REPLACE)
     void addUser(User user);
 
