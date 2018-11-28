@@ -1,4 +1,4 @@
-package com.pulse.roomdemo;
+package com.pulse.roomdemo.viewmodel;
 
 
 import android.app.Application;
@@ -24,7 +24,7 @@ AndroidViewModel :  application lifecycle observer
 public class DataViewModel extends AndroidViewModel {
 
     private ExecutorService executorService;
-
+//Room database not support MutableLiveData
     private LiveData<User> user;
     DatabaseDao databaseDao;
 

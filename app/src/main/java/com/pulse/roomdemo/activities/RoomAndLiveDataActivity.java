@@ -11,7 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
-import com.pulse.roomdemo.DataViewModel;
+import com.pulse.roomdemo.viewmodel.DataViewModel;
 import com.pulse.roomdemo.R;
 import com.pulse.roomdemo.adapters.UserListAdapter;
 import com.pulse.roomdemo.database.AppDatabase;
@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class MainActivity extends AppCompatActivity {
+public class RoomAndLiveDataActivity extends AppCompatActivity {
 
 
     private Button mBtnDelete, mBtnAdd;
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_room_livedata);
 
 
         init();
