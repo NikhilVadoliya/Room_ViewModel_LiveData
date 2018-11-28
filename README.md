@@ -1,6 +1,4 @@
 
-down vote
-accepted
 In LiveData - Android Developer Documentation, you can see that for LiveData, setValue() & postValue() methods are not public.
 
 Whereas, in MutableLiveData - Android Developer Documentation, you can see that, MutableLiveData extends LiveData internally and also the two magic methods of LiveData is publicly available in this and they are setValue() & postValue().
