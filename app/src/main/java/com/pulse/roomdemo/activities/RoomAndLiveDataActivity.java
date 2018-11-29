@@ -80,7 +80,7 @@ public class RoomAndLiveDataActivity extends AppCompatActivity {
             @Override
             public void run() {
                 mUserList = mDatabaseDao.getUserList().getValue();
-                mListAdapter.setList(mUserList);
+                mListAdapter.setStringList(mUserList);
             }
         });*/
 

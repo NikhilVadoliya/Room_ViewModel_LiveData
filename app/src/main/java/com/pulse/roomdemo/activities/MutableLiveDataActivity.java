@@ -19,8 +19,6 @@ import com.pulse.roomdemo.viewmodel.MutableViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.pulse.roomdemo.helper.Utility.getRandomName;
-
 public class MutableLiveDataActivity extends AppCompatActivity {
 
     private Button mBtnDelete, mBtnAdd;
@@ -39,13 +37,18 @@ public class MutableLiveDataActivity extends AppCompatActivity {
 
         init();
         setListener();
-        mUserList.add(Utility.getRandomName());
-        mDataViewModel.setListString(mUserList);
+
+        //onRotate device saved data get
+        mUserList.addAll(mDataViewModel.getStringList());
+        mListAdapter.setUserList(mUserList);
+
         mDataViewModel.getList().observe(this, new Observer<List<String>>() {
             @Override
             public void onChanged(@Nullable List<String> strings) {
                 mUserList = strings;
                 mListAdapter.setUserList(mUserList);
+                //on Rotation device save data
+                mDataViewModel.setStringList(mUserList);
             }
         });
 
@@ -65,9 +68,11 @@ public class MutableLiveDataActivity extends AppCompatActivity {
         mBtnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDataViewModel.addData(getRandomName());
+                mDataViewModel.addData(Utility.getRandomName());
             }
         });
+
+
     }
 
 
@@ -87,6 +92,8 @@ public class MutableLiveDataActivity extends AppCompatActivity {
 
         mListAdapter = new MutableDataListAdapter(getApplicationContext());
         mRecyclerViewUser.setAdapter(mListAdapter);
+
+
 
     }
 }
